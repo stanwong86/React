@@ -23,25 +23,58 @@ class Board extends React.Component {
         );
     }
 
+    createRow(row) {
+        const columns = []
+        for (let column = 0; column < 3; column++) {
+            let squareIndex = row * 3 + column
+            columns.push(this.renderSquare(squareIndex))
+        }
+        return columns
+    }
+
+    createBoard() {
+        const squares = []
+        for (let row = 0; row < 3; row++) {
+            squares.push(
+                <div className="board-row">
+                    {this.createRow(row)}
+                </div>
+            );
+        }
+        return squares;
+    }
+
+    createBoard2() {
+        const rows = []
+        for (let row = 0; row < 3; row++) {
+            let squares = []
+            for (let column = 0; column < 3; column++) {
+                squares.push(this.renderSquare(3*row + column));
+            }
+            rows.push(<div className="board-row">{squares}</div>);
+        }
+        return rows;
+    }
+
+    createBoard3() {
+        return (
+            [...Array(3)].map((_, row) => (
+                <div className="board-row">
+                    {
+                        [...Array(3)].map((_, column) => (
+                            this.renderSquare(row * 3 + column)
+                        ))
+                    }
+                </div>
+            ))
+        )
+    }
+
     render() {
         return (
-        <div>
-            <div className="board-row">
-            {this.renderSquare(0)}
-            {this.renderSquare(1)}
-            {this.renderSquare(2)}
+            <div>
+                {this.createBoard3()}
             </div>
-            <div className="board-row">
-            {this.renderSquare(3)}
-            {this.renderSquare(4)}
-            {this.renderSquare(5)}
-            </div>
-            <div className="board-row">
-            {this.renderSquare(6)}
-            {this.renderSquare(7)}
-            {this.renderSquare(8)}
-            </div>
-        </div>
         );
     }
 }
